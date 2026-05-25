@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mangae — Lector de Manga para Android</title>
+<meta name="description" content="Mangae es la mejor app gratuita para leer manga en Android. Modo oscuro AMOLED, descarga offline, 3 modos de lectura y catálogo enorme.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue: #0A84FF;
+    --bg: #050508;
+    --card: #0e0e14;
+    --border: rgba(255,255,255,0.07);
+    --text: #f0f0f5;
+    --dim: rgba(240,240,245,0.45);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: 'DM Sans', sans-serif; overflow-x: hidden; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 40px;
+    background: rgba(5,5,8,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+  }
+  .logo { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 800; }
+  .logo span { color: var(--blue); }
+  nav a { color: var(--dim); text-decoration: none; font-size: 14px; font-weight: 500; transition: color 0.2s; }
+  nav a:hover { color: var(--text); }
+  .nav-links { display: flex; gap: 32px; align-items: center; }
+  .nav-cta {
+    background: var(--blue); color: #fff !important; padding: 10px 20px;
+    border-radius: 10px; font-weight: 600; font-size: 14px;
+    transition: opacity 0.2s !important;
+  }
+  .nav-cta:hover { opacity: 0.85; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh; display: flex; align-items: center; justify-content: center;
+    flex-direction: column; text-align: center; padding: 120px 24px 80px;
+    position: relative;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; top: 0; left: 50%; transform: translateX(-50%);
+    width: 600px; height: 600px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(10,132,255,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(10,132,255,0.12); border: 1px solid rgba(10,132,255,0.3);
+    color: var(--blue); padding: 6px 14px; border-radius: 999px;
+    font-size: 12px; font-weight: 600; letter-spacing: 0.5px;
+    margin-bottom: 28px; text-transform: uppercase;
+  }
+  h1 {
+    font-family: 'Syne', sans-serif; font-size: clamp(42px, 8vw, 82px);
+    font-weight: 800; line-height: 1.0; letter-spacing: -2px;
+    max-width: 800px; margin-bottom: 24px;
+  }
+  h1 em { font-style: normal; color: var(--blue); }
+  .hero-sub {
+    color: var(--dim); font-size: 18px; font-weight: 300; line-height: 1.7;
+    max-width: 520px; margin-bottom: 48px;
+  }
+  .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; }
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--blue); color: #fff;
+    padding: 16px 28px; border-radius: 14px;
+    font-size: 16px; font-weight: 600; text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 8px 32px rgba(10,132,255,0.3);
+  }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(10,132,255,0.4); }
+  .btn-secondary {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--card); color: var(--text);
+    padding: 16px 28px; border-radius: 14px;
+    font-size: 16px; font-weight: 500; text-decoration: none;
+    border: 1px solid var(--border);
+    transition: background 0.2s;
+  }
+  .btn-secondary:hover { background: rgba(255,255,255,0.05); }
+
+  /* FEATURES */
+  .section { padding: 100px 24px; max-width: 1100px; margin: 0 auto; }
+  .section-label {
+    font-size: 11px; font-weight: 700; letter-spacing: 2px; color: var(--blue);
+    text-transform: uppercase; margin-bottom: 16px;
+  }
+  .section-title {
+    font-family: 'Syne', sans-serif; font-size: clamp(28px, 4vw, 44px);
+    font-weight: 800; letter-spacing: -1px; margin-bottom: 60px;
+  }
+  .features-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;
+  }
+  .feature-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 18px; padding: 28px;
+    transition: border-color 0.2s, transform 0.2s;
+  }
+  .feature-card:hover { border-color: rgba(10,132,255,0.3); transform: translateY(-3px); }
+  .feature-icon {
+    width: 44px; height: 44px; border-radius: 12px;
+    background: rgba(10,132,255,0.12); display: flex; align-items: center;
+    justify-content: center; font-size: 20px; margin-bottom: 16px;
+  }
+  .feature-card h3 { font-family: 'Syne', sans-serif; font-size: 17px; font-weight: 700; margin-bottom: 8px; }
+  .feature-card p { color: var(--dim); font-size: 14px; line-height: 1.6; }
+
+  /* DISCLAIMER */
+  .disclaimer-section {
+    background: var(--card); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
+    padding: 80px 24px;
+  }
+  .disclaimer-inner { max-width: 800px; margin: 0 auto; }
+  .disclaimer-inner h2 { font-family: 'Syne', sans-serif; font-size: 28px; font-weight: 800; margin-bottom: 20px; }
+  .disclaimer-inner p { color: var(--dim); line-height: 1.8; margin-bottom: 16px; font-size: 15px; }
+  .disclaimer-inner strong { color: var(--text); }
+
+  /* LEGAL PAGES */
+  .legal-section { padding: 100px 24px; max-width: 760px; margin: 0 auto; }
+  .legal-section h1 { font-family: 'Syne', sans-serif; font-size: 36px; font-weight: 800; margin-bottom: 8px; }
+  .legal-date { color: var(--dim); font-size: 13px; margin-bottom: 40px; }
+  .legal-section h2 { font-family: 'Syne', sans-serif; font-size: 20px; font-weight: 700; margin: 36px 0 12px; }
+  .legal-section p { color: var(--dim); line-height: 1.8; margin-bottom: 14px; font-size: 15px; }
+  .legal-section ul { color: var(--dim); padding-left: 20px; margin-bottom: 14px; }
+  .legal-section ul li { line-height: 1.8; font-size: 15px; }
+  .legal-section a { color: var(--blue); }
+
+  /* CTA BOTTOM */
+  .cta-section {
+    text-align: center; padding: 100px 24px;
+    background: radial-gradient(ellipse at center, rgba(10,132,255,0.08) 0%, transparent 70%);
+  }
+  .cta-section h2 { font-family: 'Syne', sans-serif; font-size: clamp(28px, 4vw, 48px); font-weight: 800; margin-bottom: 16px; }
+  .cta-section p { color: var(--dim); margin-bottom: 36px; font-size: 17px; }
+
+  /* FOOTER */
+  footer {
+    border-top: 1px solid var(--border); padding: 40px 40px;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 16px;
+  }
+  footer p { color: var(--dim); font-size: 13px; }
+  .footer-links { display: flex; gap: 24px; }
+  .footer-links a { color: var(--dim); text-decoration: none; font-size: 13px; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--text); }
+
+  /* TABS */
+  .tabs { display: flex; gap: 8px; margin-bottom: 40px; flex-wrap: wrap; }
+  .tab {
+    padding: 8px 18px; border-radius: 999px; font-size: 14px; font-weight: 500;
+    cursor: pointer; text-decoration: none; border: 1px solid var(--border);
+    color: var(--dim); transition: all 0.2s;
+  }
+  .tab:hover, .tab.active { background: var(--blue); color: #fff; border-color: var(--blue); }
+
+  /* Page visibility */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  @media (max-width: 600px) {
+    nav { padding: 16px 20px; }
+    .nav-links { gap: 16px; }
+    footer { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo"><span>M</span>angae</div>
+  <div class="nav-links">
+    <a href="#" onclick="showPage('home')">Inicio</a>
+    <a href="#" onclick="showPage('privacy')">Privacidad</a>
+    <a href="#" onclick="showPage('terms')">Términos</a>
+    <a href="https://play.google.com/store/apps/details?id=com.mangaeapp.reader" class="nav-cta">Descargar</a>
+  </div>
+</nav>
+
+<!-- HOME PAGE -->
+<div id="page-home" class="page active">
+  <section class="hero">
+    <div class="badge">✦ Disponible en Google Play</div>
+    <h1>Lee manga como<br><em>nunca antes</em></h1>
+    <p class="hero-sub">La app de manga para Android que no te pedirá que instales extensiones, crees una cuenta ni aguantes anuncios mientras lees.</p>
+    <div class="hero-btns">
+      <a href="https://play.google.com/store/apps/details?id=com.mangaeapp.reader" class="btn-primary">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M3.18 23.76a2 2 0 0 0 2.18-.22l12.76-7.37-3.09-3.09-11.85 10.68zm-1.18-21v20.48L13.34 12 2 1.76zm20.11 8.65L19.76 9 6.94 1.76a2 2 0 0 0-2.94 1.76v.22L17.11 15l4.99-2.59a1.5 1.5 0 0 0 .01-2.76zM5.36.68 19.76 9l2.35-1.35a1.5 1.5 0 0 0 0-2.76L7.54.22A2 2 0 0 0 5.36.68z"/></svg>
+        Descargar gratis
+      </a>
+      <a href="https://www.reddit.com/r/MangaeArt" class="btn-secondary">
+        Comunidad
+      </a>
+    </div>
+  </section>
+
+  <div class="section">
+    <div class="section-label">Funciones</div>
+    <div class="section-title">Todo lo que necesitas<br>para leer bien</div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🌙</div>
+        <h3>Modo oscuro AMOLED</h3>
+        <p>Negro puro para pantallas OLED. Ahorra batería y protege tu vista en sesiones largas.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📖</div>
+        <h3>3 modos de lectura</h3>
+        <p>Scroll vertical para manhwa, tap derecha-izquierda para manga japonés, tap izquierda-derecha para manhwa.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📥</div>
+        <h3>Descarga offline</h3>
+        <p>Guarda tus capítulos favoritos para leer sin conexión, en el metro o en el avión.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">📚</div>
+        <h3>Biblioteca personal</h3>
+        <p>Guarda lo que estás leyendo, lo pendiente y lo descargado. Tu progreso siempre sincronizado.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔍</div>
+        <h3>Filtros de género</h3>
+        <p>Incluye y excluye géneros para encontrar exactamente el tipo de manga que buscas.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🔎</div>
+        <h3>Zoom inteligente</h3>
+        <p>Mantén pulsado cualquier zona de la página para hacer zoom exactamente donde quieres.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">🌍</div>
+        <h3>Español e inglés</h3>
+        <p>Prioriza automáticamente el idioma que prefieras. Fallback automático si no hay traducción.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">⚡</div>
+        <h3>Repositorios externos</h3>
+        <p>Amplía el catálogo conectando tus propios repositorios de fuentes. Sin límites.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="disclaimer-section">
+    <div class="disclaimer-inner">
+      <div class="section-label">Aviso Legal</div>
+      <h2>Cómo funciona Mangae</h2>
+      <p>Mangae es una aplicación <strong>lectora y agregadora</strong> que actúa como cliente para fuentes de contenido de terceros. <strong>Mangae no almacena, hospeda, reproduce ni distribuye ningún cómic o manga</strong> en sus servidores propios.</p>
+      <p>El contenido mostrado proviene de <strong>APIs públicas de terceros</strong> (como MangaDex, que opera bajo sus propios términos de uso) o de <strong>repositorios externos configurados directamente por el usuario</strong>. El usuario es el único responsable de los repositorios que añada y del uso que haga de los mismos.</p>
+      <p>Ante cualquier solicitud de retirada de contenido o aviso DMCA, respondemos en menos de 48 horas. Contacto: <a href="mailto:lauracoralmartin@gmail.com">lauracoralmartin@gmail.com</a></p>
+    </div>
+  </div>
+
+  <div class="cta-section">
+    <h2>Empieza a leer hoy</h2>
+    <p>Gratis. Sin registro. Sin anuncios durante la lectura.</p>
+    <a href="https://play.google.com/store/apps/details?id=com.mangaeapp.reader" class="btn-primary">
+      Descargar en Google Play
+    </a>
+  </div>
+
+  <footer>
+    <div class="logo"><span>M</span>angae</div>
+    <p>© 2026 Mangae. Todos los derechos reservados.</p>
+    <div class="footer-links">
+      <a href="#" onclick="showPage('privacy')">Política de Privacidad</a>
+      <a href="#" onclick="showPage('terms')">Términos de Uso</a>
+      <a href="mailto:lauracoralmartin@gmail.com">Contacto</a>
+    </div>
+  </footer>
+</div>
+
+<!-- PRIVACY PAGE -->
+<div id="page-privacy" class="page">
+  <div class="legal-section">
+    <h1>Política de Privacidad</h1>
+    <p class="legal-date">Última actualización: mayo de 2026</p>
+
+    <p>Esta Política de Privacidad describe cómo Mangae ("la aplicación", "nosotros") gestiona la información cuando usas nuestra app para Android.</p>
+
+    <h2>1. Datos que recopilamos</h2>
+    <p>Mangae <strong>no recopila datos personales identificables</strong>. No exigimos registro, ni cuenta, ni email para usar la aplicación.</p>
+    <p>Los únicos datos que se almacenan son locales en tu dispositivo:</p>
+    <ul>
+      <li>Progreso de lectura (capítulo y página actual por manga)</li>
+      <li>Biblioteca personal (lista de manga guardados)</li>
+      <li>Preferencias de la app (idioma, tema, modo de lectura)</li>
+      <li>URL de repositorios externos que el usuario configure voluntariamente</li>
+      <li>Capítulos descargados para lectura offline</li>
+    </ul>
+    <p>Estos datos <strong>nunca se envían a nuestros servidores</strong> y permanecen exclusivamente en tu dispositivo.</p>
+
+    <h2>2. Permisos que usamos</h2>
+    <ul>
+      <li><strong>INTERNET</strong>: Para cargar el catálogo de manga y las páginas de lectura desde fuentes externas.</li>
+      <li><strong>WRITE_EXTERNAL_STORAGE / READ_EXTERNAL_STORAGE</strong>: Solo para la función de descarga offline. No accedemos a otros archivos de tu dispositivo.</li>
+    </ul>
+    <p>No solicitamos permisos de ubicación, cámara, contactos, micrófono ni ningún otro permiso no relacionado con la función principal de la app.</p>
+
+    <h2>3. Contenido de terceros y repositorios</h2>
+    <p>Mangae actúa como cliente de fuentes externas (como la API pública de MangaDex) y permite al usuario conectar repositorios externos de su elección. <strong>No controlamos ni somos responsables del contenido de dichas fuentes externas.</strong></p>
+    <p>El usuario es el único responsable de los repositorios que añada y del contenido al que acceda a través de ellos.</p>
+
+    <h2>4. Publicidad</h2>
+    <p>Actualmente la aplicación no muestra publicidad durante la lectura. En futuras versiones podría integrarse un sistema de publicidad (como AppLovin MAX) para financiar el desarrollo. En tal caso, esta política se actualizará para reflejar qué datos comparte dicho proveedor de publicidad. Los anuncios, si los hubiera, <strong>nunca aparecerán durante la lectura de capítulos</strong>.</p>
+
+    <h2>5. Analítica</h2>
+    <p>Actualmente no usamos ninguna herramienta de analítica que recopile datos sobre el comportamiento de los usuarios. No hay Firebase Analytics, Google Analytics ni servicios similares integrados en la aplicación.</p>
+
+    <h2>6. Menores de edad</h2>
+    <p>Mangae no está dirigida a menores de 13 años. No recopilamos conscientemente información de menores de esta edad.</p>
+
+    <h2>7. Cambios en esta política</h2>
+    <p>Cualquier cambio relevante en esta política se comunicará mediante una actualización de la aplicación y/o en nuestra comunidad de Reddit (r/MangaeArt).</p>
+
+    <h2>8. Contacto</h2>
+    <p>Para cualquier duda sobre privacidad, solicitud de borrado de datos o aviso DMCA: <a href="mailto:lauracoralmartin@gmail.com">lauracoralmartin@gmail.com</a></p>
+    <p>Respondemos en menos de 48 horas.</p>
+  </div>
+
+  <footer>
+    <div class="logo"><span>M</span>angae</div>
+    <p>© 2026 Mangae. Todos los derechos reservados.</p>
+    <div class="footer-links">
+      <a href="#" onclick="showPage('home')">Inicio</a>
+      <a href="#" onclick="showPage('terms')">Términos de Uso</a>
+      <a href="mailto:lauracoralmartin@gmail.com">Contacto</a>
+    </div>
+  </footer>
+</div>
+
+<!-- TERMS PAGE -->
+<div id="page-terms" class="page">
+  <div class="legal-section">
+    <h1>Términos de Uso</h1>
+    <p class="legal-date">Última actualización: mayo de 2026</p>
+
+    <p>Al descargar y usar Mangae ("la aplicación"), aceptas los siguientes términos. Si no los aceptas, por favor desinstala la aplicación.</p>
+
+    <h2>1. Naturaleza del servicio</h2>
+    <p>Mangae es una aplicación lectora y agregadora de contenido. <strong>No almacena, hospeda, reproduce ni distribuye manga o cómics en servidores propios.</strong> La aplicación actúa exclusivamente como cliente que conecta con:</p>
+    <ul>
+      <li>APIs públicas de terceros (MangaDex y similares) bajo sus propios términos de uso.</li>
+      <li>Repositorios externos configurados directamente por el usuario.</li>
+    </ul>
+
+    <h2>2. Responsabilidad del usuario</h2>
+    <p>El usuario es el único responsable de:</p>
+    <ul>
+      <li>Los repositorios externos que añada a la aplicación.</li>
+      <li>El contenido al que acceda a través de dichos repositorios.</li>
+      <li>El cumplimiento de las leyes de derechos de autor aplicables en su país.</li>
+    </ul>
+    <p>Mangae no puede controlar ni verificar la legalidad del contenido de repositorios externos configurados por el usuario.</p>
+
+    <h2>3. Propiedad intelectual</h2>
+    <p>Todo el contenido de manga mostrado en la aplicación pertenece a sus respectivos autores y titulares de derechos. Mangae no reclama ningún derecho sobre dicho contenido.</p>
+    <p>Si eres titular de derechos de autor y consideras que contenido accesible a través de la aplicación infringe tus derechos, contáctanos en <a href="mailto:lauracoralmartin@gmail.com">lauracoralmartin@gmail.com</a>. Procesaremos tu solicitud en menos de 48 horas.</p>
+
+    <h2>4. Limitación de responsabilidad</h2>
+    <p>Mangae se proporciona "tal cual", sin garantías de ningún tipo. No nos hacemos responsables de:</p>
+    <ul>
+      <li>Interrupciones del servicio debidas a cambios en fuentes externas.</li>
+      <li>El contenido de repositorios externos configurados por el usuario.</li>
+      <li>Daños indirectos derivados del uso de la aplicación.</li>
+    </ul>
+
+    <h2>5. Modificaciones</h2>
+    <p>Nos reservamos el derecho de modificar estos términos en cualquier momento. Los cambios se comunicarán mediante actualización de la aplicación.</p>
+
+    <h2>6. Contacto</h2>
+    <p><a href="mailto:lauracoralmartin@gmail.com">lauracoralmartin@gmail.com</a></p>
+  </div>
+
+  <footer>
+    <div class="logo"><span>M</span>angae</div>
+    <p>© 2026 Mangae. Todos los derechos reservados.</p>
+    <div class="footer-links">
+      <a href="#" onclick="showPage('home')">Inicio</a>
+      <a href="#" onclick="showPage('privacy')">Política de Privacidad</a>
+      <a href="mailto:lauracoralmartin@gmail.com">Contacto</a>
+    </div>
+  </footer>
+</div>
+
+<script>
+function showPage(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + page).classList.add('active');
+  window.scrollTo(0, 0);
+}
+// Handle hash routing
+const hash = window.location.hash.slice(1);
+if (hash === 'privacy' || hash === 'terms') showPage(hash);
+</script>
+</body>
+</html>
