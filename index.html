@@ -185,6 +185,7 @@
     <a href="#" onclick="showPage('home')">Inicio</a>
     <a href="#" onclick="showPage('privacy')">Privacidad</a>
     <a href="#" onclick="showPage('terms')">Términos</a>
+    <a href="#" onclick="showPage('dmca')">DMCA</a>
     <a href="https://play.google.com/store/apps/details?id=com.mangaeapp.reader" class="nav-cta">Descargar</a>
   </div>
 </nav>
@@ -247,8 +248,8 @@
       </div>
       <div class="feature-card">
         <div class="feature-icon">⚡</div>
-        <h3>Repositorios externos</h3>
-        <p>Amplía el catálogo conectando tus propios repositorios de fuentes. Sin límites.</p>
+        <h3>Lectura rápida</h3>
+        <p>Carga fluida de páginas, prefetch automático del siguiente capítulo y caché inteligente.</p>
       </div>
     </div>
   </div>
@@ -258,8 +259,8 @@
       <div class="section-label">Aviso Legal</div>
       <h2>Cómo funciona Mangae</h2>
       <p>Mangae es una aplicación <strong>lectora y agregadora</strong> que actúa como cliente para fuentes de contenido de terceros. <strong>Mangae no almacena, hospeda, reproduce ni distribuye ningún cómic o manga</strong> en sus servidores propios.</p>
-      <p>El contenido mostrado proviene de <strong>APIs públicas de terceros</strong> (como MangaDex, que opera bajo sus propios términos de uso) o de <strong>repositorios externos configurados directamente por el usuario</strong>. El usuario es el único responsable de los repositorios que añada y del uso que haga de los mismos.</p>
-      <p>Ante cualquier solicitud de retirada de contenido o aviso DMCA, respondemos en menos de 48 horas. Contacto: <a href="mailto:lauracoralmartin@gmail.com">lauracoralmartin@gmail.com</a></p>
+      <p>El contenido mostrado proviene de <strong>APIs públicas y fuentes de terceros</strong> que operan bajo sus propios términos de uso. Mangae se limita a indexar y mostrar dicho contenido sin alterarlo ni reproducirlo en infraestructura propia.</p>
+      <p>Ante cualquier solicitud de retirada de contenido o aviso DMCA, respondemos en menos de 48 horas. Contacto: <a href="mailto:lauracoralmartin@gmail.com">dmca@mangaeapp.com</a></p>
     </div>
   </div>
 
@@ -277,7 +278,8 @@
     <div class="footer-links">
       <a href="#" onclick="showPage('privacy')">Política de Privacidad</a>
       <a href="#" onclick="showPage('terms')">Términos de Uso</a>
-      <a href="mailto:lauracoralmartin@gmail.com">Contacto</a>
+      <a href="#" onclick="showPage('dmca')">DMCA</a>
+      <a href="mailto:dmca@mangaeapp.com">Contacto</a>
     </div>
   </footer>
 </div>
@@ -297,7 +299,6 @@
       <li>Progreso de lectura (capítulo y página actual por manga)</li>
       <li>Biblioteca personal (lista de manga guardados)</li>
       <li>Preferencias de la app (idioma, tema, modo de lectura)</li>
-      <li>URL de repositorios externos que el usuario configure voluntariamente</li>
       <li>Capítulos descargados para lectura offline</li>
     </ul>
     <p>Estos datos <strong>nunca se envían a nuestros servidores</strong> y permanecen exclusivamente en tu dispositivo.</p>
@@ -309,9 +310,9 @@
     </ul>
     <p>No solicitamos permisos de ubicación, cámara, contactos, micrófono ni ningún otro permiso no relacionado con la función principal de la app.</p>
 
-    <h2>3. Contenido de terceros y repositorios</h2>
-    <p>Mangae actúa como cliente de fuentes externas (como la API pública de MangaDex) y permite al usuario conectar repositorios externos de su elección. <strong>No controlamos ni somos responsables del contenido de dichas fuentes externas.</strong></p>
-    <p>El usuario es el único responsable de los repositorios que añada y del contenido al que acceda a través de ellos.</p>
+    <h2>3. Contenido de terceros</h2>
+    <p>Mangae actúa como cliente de fuentes externas (incluyendo la API pública de MangaDex y otras fuentes públicas). <strong>No controlamos ni somos responsables del contenido de dichas fuentes externas.</strong></p>
+    <p>El contenido pertenece a sus respectivos autores y titulares de derechos. Mangae se limita a indexarlo y mostrarlo al usuario final.</p>
 
     <h2>4. Publicidad</h2>
     <p>Actualmente la aplicación no muestra publicidad durante la lectura. En futuras versiones podría integrarse un sistema de publicidad (como AppLovin MAX) para financiar el desarrollo. En tal caso, esta política se actualizará para reflejar qué datos comparte dicho proveedor de publicidad. Los anuncios, si los hubiera, <strong>nunca aparecerán durante la lectura de capítulos</strong>.</p>
@@ -326,7 +327,7 @@
     <p>Cualquier cambio relevante en esta política se comunicará mediante una actualización de la aplicación y/o en nuestra comunidad de Reddit (r/MangaeArt).</p>
 
     <h2>8. Contacto</h2>
-    <p>Para cualquier duda sobre privacidad, solicitud de borrado de datos o aviso DMCA: <a href="mailto:lauracoralmartin@gmail.com">lauracoralmartin@gmail.com</a></p>
+    <p>Para cualquier duda sobre privacidad, solicitud de borrado de datos o aviso DMCA: <a href="mailto:dmca@mangaeapp.com">dmca@mangaeapp.com</a></p>
     <p>Respondemos en menos de 48 horas.</p>
   </div>
 
@@ -336,7 +337,8 @@
     <div class="footer-links">
       <a href="#" onclick="showPage('home')">Inicio</a>
       <a href="#" onclick="showPage('terms')">Términos de Uso</a>
-      <a href="mailto:lauracoralmartin@gmail.com">Contacto</a>
+      <a href="#" onclick="showPage('dmca')">DMCA</a>
+      <a href="mailto:dmca@mangaeapp.com">Contacto</a>
     </div>
   </footer>
 </div>
@@ -350,30 +352,27 @@
     <p>Al descargar y usar Mangae ("la aplicación"), aceptas los siguientes términos. Si no los aceptas, por favor desinstala la aplicación.</p>
 
     <h2>1. Naturaleza del servicio</h2>
-    <p>Mangae es una aplicación lectora y agregadora de contenido. <strong>No almacena, hospeda, reproduce ni distribuye manga o cómics en servidores propios.</strong> La aplicación actúa exclusivamente como cliente que conecta con:</p>
-    <ul>
-      <li>APIs públicas de terceros (MangaDex y similares) bajo sus propios términos de uso.</li>
-      <li>Repositorios externos configurados directamente por el usuario.</li>
-    </ul>
+    <p>Mangae es una aplicación lectora y agregadora de contenido. <strong>No almacena, hospeda, reproduce ni distribuye manga o cómics en servidores propios.</strong> La aplicación actúa exclusivamente como cliente que indexa y muestra contenido proveniente de APIs públicas y fuentes de terceros que operan bajo sus propios términos de uso.</p>
+    <p>Todo el contenido es propiedad de sus respectivos autores y titulares de derechos. Mangae no reclama ningún derecho sobre dicho contenido y se ampara en el carácter informativo y de uso justo (fair use) del servicio, conforme a la Sección 107 de la Ley de Derechos de Autor de 1976, que permite el uso de material protegido con fines de comentario, crítica, información, enseñanza, investigación y estudio.</p>
 
     <h2>2. Responsabilidad del usuario</h2>
-    <p>El usuario es el único responsable de:</p>
+    <p>El usuario es responsable de:</p>
     <ul>
-      <li>Los repositorios externos que añada a la aplicación.</li>
-      <li>El contenido al que acceda a través de dichos repositorios.</li>
-      <li>El cumplimiento de las leyes de derechos de autor aplicables en su país.</li>
+      <li>El uso que haga del contenido al que accede a través de la aplicación.</li>
+      <li>El cumplimiento de las leyes de derechos de autor aplicables en su país de residencia.</li>
+      <li>Adquirir las obras originales de sus autores cuando estén disponibles oficialmente.</li>
     </ul>
-    <p>Mangae no puede controlar ni verificar la legalidad del contenido de repositorios externos configurados por el usuario.</p>
+    <p>Mangae no puede controlar ni verificar la legalidad del contenido alojado en fuentes externas.</p>
 
     <h2>3. Propiedad intelectual</h2>
     <p>Todo el contenido de manga mostrado en la aplicación pertenece a sus respectivos autores y titulares de derechos. Mangae no reclama ningún derecho sobre dicho contenido.</p>
-    <p>Si eres titular de derechos de autor y consideras que contenido accesible a través de la aplicación infringe tus derechos, contáctanos en <a href="mailto:lauracoralmartin@gmail.com">lauracoralmartin@gmail.com</a>. Procesaremos tu solicitud en menos de 48 horas.</p>
+    <p>Si eres titular de derechos de autor y consideras que contenido accesible a través de la aplicación infringe tus derechos, contáctanos en <a href="mailto:dmca@mangaeapp.com">dmca@mangaeapp.com</a>. Procesaremos tu solicitud en menos de 48 horas.</p>
 
     <h2>4. Limitación de responsabilidad</h2>
     <p>Mangae se proporciona "tal cual", sin garantías de ningún tipo. No nos hacemos responsables de:</p>
     <ul>
       <li>Interrupciones del servicio debidas a cambios en fuentes externas.</li>
-      <li>El contenido de repositorios externos configurados por el usuario.</li>
+      <li>La exactitud, calidad o disponibilidad del contenido proveniente de terceros.</li>
       <li>Daños indirectos derivados del uso de la aplicación.</li>
     </ul>
 
@@ -381,7 +380,7 @@
     <p>Nos reservamos el derecho de modificar estos términos en cualquier momento. Los cambios se comunicarán mediante actualización de la aplicación.</p>
 
     <h2>6. Contacto</h2>
-    <p><a href="mailto:lauracoralmartin@gmail.com">lauracoralmartin@gmail.com</a></p>
+    <p><a href="mailto:dmca@mangaeapp.com">dmca@mangaeapp.com</a></p>
   </div>
 
   <footer>
@@ -390,7 +389,59 @@
     <div class="footer-links">
       <a href="#" onclick="showPage('home')">Inicio</a>
       <a href="#" onclick="showPage('privacy')">Política de Privacidad</a>
-      <a href="mailto:lauracoralmartin@gmail.com">Contacto</a>
+      <a href="mailto:dmca@mangaeapp.com">Contacto</a>
+    </div>
+  </footer>
+</div>
+
+
+<!-- DMCA PAGE -->
+<div id="page-dmca" class="page">
+  <div class="legal-section">
+    <h1>Política DMCA</h1>
+    <p class="legal-date">Última actualización: mayo de 2026</p>
+
+    <p>Mangae respeta los derechos de propiedad intelectual de terceros y espera lo mismo de sus usuarios. Esta política describe el procedimiento para notificar la presunta infracción de derechos de autor en contenido accesible a través de la aplicación.</p>
+
+    <h2>1. Aviso importante</h2>
+    <p>Mangae es una aplicación <strong>agregadora y lectora</strong> que indexa contenido alojado en servidores de terceros. <strong>No alojamos, almacenamos ni distribuimos contenido protegido por derechos de autor en nuestra propia infraestructura.</strong></p>
+    <p>Cuando recibimos una notificación válida de infracción, eliminamos el enlace o la indexación al contenido correspondiente dentro de la aplicación en un plazo máximo de <strong>48 horas</strong>, sin perjuicio de que el contenido pueda continuar accesible en su servidor de origen.</p>
+
+    <h2>2. Cómo enviar una notificación DMCA</h2>
+    <p>Si eres titular de derechos de autor o representante legalmente autorizado, envíanos una notificación a <a href="mailto:dmca@mangaeapp.com">dmca@mangaeapp.com</a> con la siguiente información:</p>
+    <ul>
+      <li>Identificación de la obra protegida que consideras infringida (título, autor, número ISBN si procede).</li>
+      <li>Identificación específica del material que consideras infractor dentro de la aplicación (título exacto del manga tal y como aparece en Mangae, e idealmente captura de pantalla).</li>
+      <li>Tu información de contacto: nombre completo, dirección postal, teléfono y correo electrónico.</li>
+      <li>Declaración de buena fe de que el uso del material no está autorizado por el titular del copyright, su agente o la ley.</li>
+      <li>Declaración bajo pena de perjurio de que la información en la notificación es exacta y de que estás autorizado para actuar en nombre del titular.</li>
+      <li>Firma física o electrónica del titular o de la persona autorizada.</li>
+    </ul>
+
+    <h2>3. Plazo de respuesta</h2>
+    <p>Procesamos todas las notificaciones DMCA válidas en un plazo máximo de <strong>48 horas</strong> desde su recepción. Una vez procesada, retiraremos el contenido sin discusión y notificaremos al remitente de la acción tomada.</p>
+
+    <h2>4. Notificaciones falsas</h2>
+    <p>El envío de notificaciones DMCA falsas o presentadas de mala fe puede conllevar responsabilidad civil. Antes de enviar una notificación, asegúrate de que efectivamente eres titular de los derechos sobre la obra reclamada o representante autorizado.</p>
+
+    <h2>5. Contranotificación</h2>
+    <p>Si consideras que el contenido fue retirado por error, puedes enviar una contranotificación a la misma dirección de correo electrónico, incluyendo identificación del material retirado, declaración bajo pena de perjurio de que la retirada fue por error y tus datos de contacto completos.</p>
+
+    <h2>6. Repetidores infractores</h2>
+    <p>Mangae se reserva el derecho de bloquear permanentemente, a discreción propia, el acceso de usuarios que reiteradamente vulneren derechos de autor o que abusen del procedimiento DMCA.</p>
+
+    <h2>7. Contacto</h2>
+    <p>Para cualquier cuestión relacionada con derechos de autor o DMCA: <a href="mailto:dmca@mangaeapp.com">dmca@mangaeapp.com</a></p>
+  </div>
+
+  <footer>
+    <div class="logo"><span>M</span>angae</div>
+    <p>© 2026 Mangae. Todos los derechos reservados.</p>
+    <div class="footer-links">
+      <a href="#" onclick="showPage('home')">Inicio</a>
+      <a href="#" onclick="showPage('privacy')">Política de Privacidad</a>
+      <a href="#" onclick="showPage('terms')">Términos de Uso</a>
+      <a href="mailto:dmca@mangaeapp.com">Contacto</a>
     </div>
   </footer>
 </div>
@@ -403,7 +454,7 @@ function showPage(page) {
 }
 // Handle hash routing
 const hash = window.location.hash.slice(1);
-if (hash === 'privacy' || hash === 'terms') showPage(hash);
+if (hash === 'privacy' || hash === 'terms' || hash === 'dmca') showPage(hash);
 </script>
 </body>
 </html>
